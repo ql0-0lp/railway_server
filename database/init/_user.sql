@@ -1,0 +1,5 @@
+CREATE USER _user WITH PASSWORD '_user';
+GRANT UPDATE, DELETE ON human, ticket TO _user;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO _user;
+
+SELECT * FROM pg_user;
