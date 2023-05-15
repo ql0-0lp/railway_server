@@ -7,11 +7,6 @@ $BODY$
 	END;
 $BODY$
 LANGUAGE plpgsql;
-
-
-SELECT * FROM add_type_van('Купе', 65);
-
-SELECT * FROM type_van;
 ------------------------------------------- ADD DATA TO type_van TABLE -------------------------------------------
 
 
@@ -23,8 +18,6 @@ $$
 	END;
 $$
 LANGUAGE plpgsql;
-
-SELECT * FROM delete_type_van('Купе')
 ------------------------------------------- DELETE DATA FROM human TABLE -------------------------------------------
 
 
@@ -37,8 +30,6 @@ $BODY$
 	END;
 $BODY$
 LANGUAGE plpgsql;
-					
-SELECT * FROM update_type_van('Купе', 50);
 ------------------------------------------- UPDATE DATA FOR human TABLE -------------------------------------------
 
 

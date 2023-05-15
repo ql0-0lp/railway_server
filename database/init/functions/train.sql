@@ -7,12 +7,6 @@ $BODY$
 	END;
 $BODY$
 LANGUAGE plpgsql;
-
-SELECT * FROM add_train_model('М302', 28);
-SELECT * FROM add_train_model('М303', 30);
-
-SELECT * FROM train_model;	
-
 ------------------------------------------- ADD DATA TO trains TABLE -------------------------------------------
 
 
@@ -24,8 +18,6 @@ $BODY$
 	END;
 $BODY$
 LANGUAGE plpgsql;
-
-SELECT * FROM delete_train_model(1);
 ------------------------------------------- DELETE DATA FROM trains TABLE -------------------------------------------
 
 
@@ -38,6 +30,4 @@ $BODY$
 	END;
 $BODY$
 LANGUAGE plpgsql;
-
-SELECT * FROM update_train_model(3, 'М302', 30);
 ------------------------------------------- UPDATE DATA FOR trains TABLE -------------------------------------------

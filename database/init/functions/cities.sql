@@ -7,25 +7,31 @@ $BODY$
 	END;
 $BODY$
 LANGUAGE plpgsql;
-
-SELECT * FROM add_train_model('М302', 28);
-SELECT * FROM add_train_model('М303', 30);
-
-SELECT * FROM train_model;	
-
 ------------------------------------------- ADD DATA TO trains TABLE -------------------------------------------
 
 
-CREATE OR REPLACE FUNCTION delete_cities(city_name varchar(255))
+CREATE OR REPLACE FUNCTION delete_cities(_city_name varchar(255))
 RETURNS VOID AS
 $BODY$
 	BEGIN
-		DELETE FROM van WHERE city_name = _city_name;
+		DELETE FROM cities WHERE city_name = _city_name;
 	END;
 $BODY$
 LANGUAGE plpgsql;
-
-SELECT * FROM delete_train_model(1);
 ------------------------------------------- DELETE DATA FROM trains TABLE -------------------------------------------
+
+CREATE OR REPLACE FUNCTION fetch_city()
+    RETURNS TABLE(city_name varchar(255)) AS
+$BODY$
+BEGIN
+    RETURN QUERY
+        SELECT cities.city_name
+        FROM cities
+        ORDER BY cities.city_name;
+END;
+$BODY$
+    LANGUAGE plpgsql;
+------------------------------------------- FETCH DATA FROM trains TABLE -------------------------------------------
+
 
 

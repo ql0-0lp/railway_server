@@ -7,12 +7,6 @@ $BODY$
 	END;
 $BODY$
 LANGUAGE plpgsql;
-
-SELECT * FROM add_train_model('М302', 28);
-SELECT * FROM add_train_model('М303', 30);
-
-SELECT * FROM train_model;	
-
 ------------------------------------------- ADD DATA TO trains TABLE -------------------------------------------
 
 
@@ -24,22 +18,30 @@ $BODY$
 	END;
 $BODY$
 LANGUAGE plpgsql;
-
-SELECT * FROM delete_train_model(1);
 ------------------------------------------- DELETE DATA FROM trains TABLE -------------------------------------------
 
 
-CREATE OR REPLACE FUNCTION update_van(_van_id INT, _van_name VARCHAR(128), _fk_type_van varchar(128), _fk_train_id int)
+CREATE OR REPLACE FUNCTION update_van(_van_id INT, _van_name VARCHAR(128))
 RETURNS VOID AS
 $BODY$
 	BEGIN
-		UPDATE van SET van_name = _van_name, 
-			fk_type_van = _fk_type_van, 
-			fk_train_id = _fk_train_id
+		UPDATE van SET van_name = _van_name
 		WHERE van_id = _van_id;
 	END;
 $BODY$
 LANGUAGE plpgsql;
-
-SELECT * FROM update_train_model(3, 'М302', 30);
 ------------------------------------------- UPDATE DATA FOR trains TABLE -------------------------------------------
+
+
+CREATE OR REPLACE FUNCTION fetch_vans(_fk_train_id int)
+RETURNS TABLE(van_id int, van_name varchar(128), fk_type_van varchar(128)) AS
+$BODY$
+    BEGIN
+        RETURN QUERY
+        SELECT van.van_id, van.van_name, van.fk_type_van
+        FROM van
+        WHERE fk_train_id = _fk_train_id
+        ORDER BY van.van_name;
+    END;
+$BODY$
+LANGUAGE plpgsql;

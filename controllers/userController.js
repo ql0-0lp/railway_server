@@ -13,17 +13,18 @@ const generateToken = (id, login, role) => {
 
 class UserController {
 
-    async registration (req, res, next) {
+    async registration(req, res, next) {
         try {
-            let {user_name, user_last_name, user_patronymic, user_document, user_date_of_birth,
-                user_tel, user_email, user_login, user_password} = req.body
+            let {user_name, user_last_name, user_patronymic,
+                user_document, user_date_of_birth, user_tel,
+                user_email, user_login, user_password} = req.body
 
             user_password = await bcrypt.hash(user_password, 8)
 
             const user = await adminPool.query(
                 "SELECT * FROM add_human($1, $2, $3, $4, $5, $6, $7, $8, $9)",
-                [user_name, user_last_name, user_patronymic, user_document, user_date_of_birth, user_tel,
-                    user_email, user_login, user_password]
+                [user_name, user_last_name, user_patronymic, user_document,
+                    user_date_of_birth, user_tel, user_email, user_login, user_password]
             )
 
             return res.json(user)
@@ -32,7 +33,7 @@ class UserController {
         }
     }
 
-    async login (req, res, next) {
+    async login(req, res, next) {
         try {
             const {user_login, user_password} = req.body
 
@@ -54,7 +55,7 @@ class UserController {
         }
     }
 
-    async checkAuth (req, res, next) {
+    async checkAuth(req, res, next) {
         try {
             const token = generateToken(req.user.id, req.user.login, req.user.role)
             return res.json(token)

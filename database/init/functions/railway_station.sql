@@ -7,12 +7,6 @@ $BODY$
 	END;
 $BODY$
 LANGUAGE plpgsql;
-
-SELECT * FROM add_train_model('М302', 28);
-SELECT * FROM add_train_model('М303', 30);
-
-SELECT * FROM train_model;	
-
 ------------------------------------------- ADD DATA TO trains TABLE -------------------------------------------
 
 
@@ -24,20 +18,31 @@ $BODY$
 	END;
 $BODY$
 LANGUAGE plpgsql;
-
-SELECT * FROM delete_train_model(1);
 ------------------------------------------- DELETE DATA FROM trains TABLE -------------------------------------------
 
 
-CREATE OR REPLACE FUNCTION update_railway_station(_railway_station_id int, _railway_station_name varchar(128), _fk_city_id varchar(255))
+CREATE OR REPLACE FUNCTION update_railway_station(_railway_station_id int, _railway_station_name varchar(128))
 RETURNS VOID AS
 $BODY$
 	BEGIN
-		UPDATE railway_station SET railway_station_name = _railway_station_name, fk_city_id = _fk_city_id
+		UPDATE railway_station SET railway_station_name = _railway_station_name
 		WHERE railway_station_id = _railway_station_id;
 	END;
 $BODY$
 LANGUAGE plpgsql;
-
-SELECT * FROM update_train_model(3, 'М302', 30);
 ------------------------------------------- UPDATE DATA FOR trains TABLE -------------------------------------------
+
+
+CREATE OR REPLACE FUNCTION fetch_railway_station(_fk_city_id varchar(255))
+    RETURNS TABLE(railway_station_id int, railway_station_name varchar(128)) AS
+$BODY$
+BEGIN
+    RETURN QUERY
+        SELECT railway_station.railway_station_id, railway_station.railway_station_name
+        FROM railway_station
+        WHERE fk_city_id = _fk_city_id
+        ORDER BY railway_station.railway_station_name;
+END;
+$BODY$
+    LANGUAGE plpgsql;
+------------------------------------------- FETCH DATA FOR trains TABLE -------------------------------------------
