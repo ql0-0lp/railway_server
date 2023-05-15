@@ -4,10 +4,18 @@ const userRoute = require('./userRoute')
 const cityRoute = require('./cityRoute')
 const railwayStationRoute = require('./railwayStationRoute')
 const seatRoute = require('./seatRoute')
+const typeVanRoute = require('./typeVanRoute')
+const vanRoute = require('./vanRoute')
+const trainModelRoute = require('./trainModelRoute')
+const trainRoute = require('./trainRoute')
 
 router.use('/user', userRoute)
 router.use('/city', cityRoute)
 router.use('/railway-station', railwayStationRoute)
 router.use('/seat', seatRoute)
+router.use('/type-van', typeVanRoute)
+router.use('/van', vanRoute)
+router.use('/train-model', trainModelRoute)
+router.use('/train', trainRoute)
 
 module.exports = router

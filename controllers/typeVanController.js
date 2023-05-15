@@ -1,4 +1,4 @@
-const {adminPool} = require("../database/db");
+const {adminPool, userPool} = require("../database/db");
 const ApiError = require("../error/ApiError");
 
 class TypeVanController {
@@ -19,11 +19,11 @@ class TypeVanController {
     async update(req, res, next) {
         try {
             const {type_van_name, seat_count} = req.body
-            const van = adminPool.query(
+            const typeVan = adminPool.query(
                 "SELECT * FROM update_type_van($1, $2)",
                 [type_van_name, seat_count]
             )
-            return res.json(van)
+            return res.json(typeVan)
         } catch (e) {
             next(ApiError.badRequest('Не удалось обновить тип вагона. ' + e.message))
         }
@@ -32,18 +32,26 @@ class TypeVanController {
     async delete(req, res, next) {
         try {
             const {type_van_name} = req.params
-            const van = adminPool.query(
+            const typeVan = adminPool.query(
                 "SELECT * FROM delete_type_van($1)",
                 [type_van_name]
             )
-            return res.json(van)
+            return res.json(typeVan)
         } catch (e) {
             next(ApiError.badRequest('Не удалось удалить тип вагона. ' + e.message))
         }
     }
 
     async getAll(req, res, next) {
-
+        try {
+            let typesVan = userPool.query(
+                "SELECT * FROM fetch_type_van()"
+            )
+            typesVan = typesVan.rows
+            return res.json(typesVan)
+        } catch (e) {
+            next(ApiError.badRequest('Не удалось получить типы вагонов. ' + e.message))
+        }
     }
 
 }

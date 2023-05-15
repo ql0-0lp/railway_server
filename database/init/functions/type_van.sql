@@ -32,4 +32,16 @@ $BODY$
 LANGUAGE plpgsql;
 ------------------------------------------- UPDATE DATA FOR human TABLE -------------------------------------------
 
+CREATE OR REPLACE FUNCTION fetch_type_van()
+    RETURNS TABLE(type_van_name varchar(128), seat_count int) AS
+$BODY$
+BEGIN
+    RETURN QUERY
+        SELECT type_van.type_van_name, type_van.seat_count
+        FROM type_van
+        ORDER BY type_van.type_van_name;
+END;
+$BODY$
+    LANGUAGE plpgsql;
+
 

@@ -31,3 +31,17 @@ $BODY$
 $BODY$
 LANGUAGE plpgsql;
 ------------------------------------------- UPDATE DATA FOR trains TABLE -------------------------------------------
+
+
+CREATE OR REPLACE FUNCTION fetch_train_model()
+    RETURNS TABLE(train_model_id int, train_model_name varchar(128), max_van int) AS
+$BODY$
+BEGIN
+    RETURN QUERY
+        SELECT train_model.train_model_id, train_model.train_model_name, train_model.max_van
+        FROM train_model
+        ORDER BY train_model.train_model_name;
+END;
+$BODY$
+    LANGUAGE plpgsql;
+------------------------------------------- FETCH DATA FOR trains TABLE -------------------------------------------
