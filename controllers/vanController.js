@@ -6,7 +6,7 @@ class VanController {
     async create(req, res, next) {
         try {
             const {van_name, fk_type_van, fk_train_id} = req.body
-            const van = adminPool.query(
+            const van = await adminPool.query(
                 "SELECT * FROM add_van($1, $2, $3)",
                 [van_name, fk_type_van, fk_train_id]
             )
@@ -19,7 +19,7 @@ class VanController {
     async update(req, res, next) {
         try {
             const {van_id, van_name} = req.body
-            const van = adminPool.query(
+            const van = await adminPool.query(
                 "SELECT * FROM update_van($1, $2)",
                 [van_id, van_name]
             )
@@ -32,7 +32,7 @@ class VanController {
     async delete(req, res, next) {
         try {
             const {van_id} = req.params
-            const van = adminPool.query(
+            const van = await adminPool.query(
                 "SELECT * FROM delete_van($1)",
                 [van_id]
             )
@@ -45,7 +45,7 @@ class VanController {
     async getAll(req, res, next) {
         try {
             const {fc_train_id} = req.query
-            let vans = userPool.query(
+            let vans = await userPool.query(
                 "SELECT * FROM fetch_vans($1)",
                 [fc_train_id]
             )

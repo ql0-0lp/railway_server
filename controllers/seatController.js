@@ -6,7 +6,7 @@ class SeatController {
     async create(req, res, next) {
         try {
             const {seat_num, fk_van_id} = req.body
-            const seat = adminPool.query(
+            const seat = await adminPool.query(
                 "SELECT * FROM add_seats($1, $2)",
                 [seat_num, fk_van_id]
             )
@@ -19,7 +19,7 @@ class SeatController {
     async update(req, res, next) {
         try {
             const {seat_id, seat_num} = req.body
-            const seat = adminPool.query(
+            const seat = await adminPool.query(
                 "SELECT * FROM update_seats($1, $2)",
                 [seat_id, seat_num]
             )
@@ -32,7 +32,7 @@ class SeatController {
     async delete(req, res, next) {
         try {
             const {seat_id} = req.params
-            const seat = adminPool.query(
+            const seat = await adminPool.query(
                 "SELECT * FROM delete_seats($1)",
                 [seat_id]
             )
@@ -45,7 +45,7 @@ class SeatController {
     async getAll(req, res, next) {
         try {
             const {fk_van_id} = req.query
-            let seats = userPool.query(
+            let seats = await userPool.query(
                 "SELECT * FROM fetch_seats($1)",
                 [fk_van_id]
             )

@@ -6,7 +6,7 @@ class RailwayStationController {
     async create(req, res, next) {
         try {
             const {railway_station_name, fk_city_id} = req.body
-            const railwayStation = adminPool.query(
+            const railwayStation = await adminPool.query(
                 "SELECT * FROM add_railway_station($1, $2)",
                 [railway_station_name, fk_city_id]
             )
@@ -19,7 +19,7 @@ class RailwayStationController {
     async update(req, res, next) {
         try {
             const {railway_station_id, railway_station_name} = req.body
-            const railwayStation = adminPool.query(
+            const railwayStation = await adminPool.query(
                 "SELECT * FROM update_railway_station($1, $2)",
                 [railway_station_id, railway_station_name]
             )
@@ -32,7 +32,7 @@ class RailwayStationController {
     async delete(req, res, next) {
         try {
             const {railway_station_id} = req.params
-            const railwayStation = adminPool.query(
+            const railwayStation = await adminPool.query(
                 "SELECT * FROM delete_railway_station($1)",
                 [railway_station_id]
             )
@@ -45,7 +45,7 @@ class RailwayStationController {
     async getAll(req, res, next) {
         try {
             const {fk_city_id} = req.query
-            let cities = userPool.query(
+            let cities = await userPool.query(
                 "SELECT * FROM fetch_railway_station($1)",
                 [fk_city_id]
             )

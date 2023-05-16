@@ -6,7 +6,7 @@ class CitiesController {
     async create(req, res, next) {
         try {
             const {city_name} = req.body
-            const city = adminPool.query(
+            const city = await adminPool.query(
                 "SELECT * FROM add_cities($1)",
                 [city_name]
 
@@ -20,7 +20,7 @@ class CitiesController {
     async delete(req, res, next) {
         try {
             const {city_id} = req.params
-            const city = adminPool.query(
+            const city = await adminPool.query(
                 "SELECT * FROM delete_cities($1)",
                 [city_id]
             )
@@ -32,8 +32,9 @@ class CitiesController {
 
     async getAll(req, res, next) {
         try {
-            let cities = userPool.query("SELECT * FROM fetch_city()")
+            let cities = await userPool.query("SELECT * FROM fetch_city()")
             cities = cities.rows
+            console.log(cities)
             return res.json(cities)
         } catch (e) {
             next(ApiError.badRequest('Не удалось получить города. ' + e.message))

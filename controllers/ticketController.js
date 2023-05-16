@@ -14,7 +14,7 @@ class TicketController {
     async delete(req, res, next) {
         try {
             const {ticket_id} = req.params
-            const seat = adminPool.query(
+            const seat = await adminPool.query(
                 "SELECT * FROM delete_ticket($1)",
                 [ticket_id]
             )

@@ -6,7 +6,7 @@ class TrainController {
     async create(req, res, next) {
         try {
             const {fk_train_model} = req.body
-            const train = adminPool.query(
+            const train = await adminPool.query(
                 "SELECT * FROM add_train($1)",
                 [fk_train_model]
             )
@@ -19,7 +19,7 @@ class TrainController {
     async update(req, res, next) {
         try {
             const {train_id, fk_train_model} = req.body
-            const train = adminPool.query(
+            const train = await adminPool.query(
                 "SELECT * FROM update_train($1, $2)",
                 [train_id, fk_train_model]
             )
@@ -32,7 +32,7 @@ class TrainController {
     async delete(req, res, next) {
         try {
             const {train_id} = req.params
-            const train = adminPool.query(
+            const train = await adminPool.query(
                 "SELECT * FROM delete_train($1)",
                 [train_id]
             )
@@ -44,7 +44,7 @@ class TrainController {
 
     async getAll(req, res, next) {
         try {
-            let trains = userPool.query(
+            let trains = await userPool.query(
                 "SELECT * FROM fetch_train()"
             )
             trains = trains.rows

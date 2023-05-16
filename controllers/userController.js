@@ -21,13 +21,15 @@ class UserController {
 
             user_password = await bcrypt.hash(user_password, 8)
 
-            const user = await adminPool.query(
+            let user = await adminPool.query(
                 "SELECT * FROM add_human($1, $2, $3, $4, $5, $6, $7, $8, $9)",
                 [user_name, user_last_name, user_patronymic, user_document,
                     user_date_of_birth, user_tel, user_email, user_login, user_password]
             )
+            user = user.rows[0]
 
-            return res.json(user)
+            const token = generateToken(user.user_id, user.user_login, user.user_role)
+            return res.json(token)
         } catch (e) {
             next(ApiError.badRequest('Не удалось зарегестрироваться. ' + e.message))
         }
@@ -57,7 +59,7 @@ class UserController {
 
     async checkAuth(req, res, next) {
         try {
-            const token = generateToken(req.user.id, req.user.login, req.user.role)
+            const token = generateToken(req.user.user_id, req.user.user_login, req.user.user_role)
             return res.json(token)
         } catch (e) {
             return next(ApiError.badRequest(e.message))
