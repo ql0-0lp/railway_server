@@ -5,10 +5,11 @@ class RailwayStationController {
 
     async create(req, res, next) {
         try {
-            const {railway_station_name, fk_city_id} = req.body
+            const {railway_station_name, fk_city_name} = req.body
+            console.log(railway_station_name, fk_city_name)
             const railwayStation = await adminPool.query(
                 "SELECT * FROM add_railway_station($1, $2)",
-                [railway_station_name, fk_city_id]
+                [railway_station_name, fk_city_name]
             )
             return res.json(railwayStation)
         } catch (e) {

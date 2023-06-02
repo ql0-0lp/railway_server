@@ -8,6 +8,8 @@ const typeVanRoute = require('./typeVanRoute')
 const vanRoute = require('./vanRoute')
 const trainModelRoute = require('./trainModelRoute')
 const trainRoute = require('./trainRoute')
+const routeRoute = require('./routeRoute')
+const ticketRoute = require('./ticketRoute')
 
 router.use('/user', userRoute)
 router.use('/city', cityRoute)
@@ -17,5 +19,7 @@ router.use('/type-van', typeVanRoute)
 router.use('/van', vanRoute)
 router.use('/train-model', trainModelRoute)
 router.use('/train', trainRoute)
+router.use('/route', routeRoute)
+router.use('/ticket', ticketRoute)
 
 module.exports = router

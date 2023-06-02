@@ -1,47 +1,36 @@
-CREATE OR REPLACE FUNCTION add_train(_fk_train_model VARCHAR(128))
-RETURNS VOID AS 
-$BODY$
-	BEGIN
-		INSERT INTO train(fk_train_model)
-		VALUES (_fk_train_model);
-	END;
-$BODY$
-LANGUAGE plpgsql;
+create function add_train(_fk_train_model integer) returns void
+    language plpgsql
+as
+$$
+BEGIN
+    INSERT INTO train(fk_train_model)
+    VALUES (_fk_train_model);
+END;
+$$;
+
 ------------------------------------------- ADD DATA TO trains TABLE -------------------------------------------
 
 
-CREATE OR REPLACE FUNCTION delete_train(_train_id INT)
-RETURNS VOID AS
-$BODY$
-	BEGIN
-		DELETE FROM train WHERE train_id = _train_id;
-	END;
-$BODY$
-LANGUAGE plpgsql;
+create function delete_train(_train_id integer) returns void
+    language plpgsql
+as
+$$
+BEGIN
+    DELETE FROM train WHERE train_id = _train_id;
+END;
+$$;
+
 ------------------------------------------- DELETE DATA FROM trains TABLE -------------------------------------------
 
 
-CREATE OR REPLACE FUNCTION update_train(_train_id INT, _fk_train_model VARCHAR(128))
-RETURNS VOID AS
-$BODY$
-	BEGIN
-		UPDATE train SET fk_train_model = _fk_train_model
-		WHERE train_id = _train_id;
-	END;
-$BODY$
-LANGUAGE plpgsql;
-------------------------------------------- UPDATE DATA FOR trains TABLE -------------------------------------------
-
-
-CREATE OR REPLACE FUNCTION fetch_train()
-    RETURNS TABLE(train_model_id int, fk_train_model int) AS
-$BODY$
+create function update_train(_train_id integer, _fk_train_model integer) returns void
+    language plpgsql
+as
+$$
 BEGIN
-    RETURN QUERY
-        SELECT train.train_id, train.fk_train_model
-        FROM train
-        ORDER BY train.fk_train_model;
+    UPDATE train SET fk_train_model = _fk_train_model
+    WHERE train_id = _train_id;
 END;
-$BODY$
-    LANGUAGE plpgsql;
-------------------------------------------- FETCH DATA FOR trains TABLE -------------------------------------------
+$$;
+
+------------------------------------------- UPDATE DATA FOR trains TABLE -------------------------------------------

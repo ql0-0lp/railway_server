@@ -7,7 +7,7 @@ class SeatController {
         try {
             const {seat_num, fk_van_id} = req.body
             const seat = await adminPool.query(
-                "SELECT * FROM add_seats($1, $2)",
+                "SELECT * FROM add_seats($1, $2, true)",
                 [seat_num, fk_van_id]
             )
             return res.json(seat)
@@ -18,10 +18,10 @@ class SeatController {
 
     async update(req, res, next) {
         try {
-            const {seat_id, seat_num} = req.body
+            const {seat_id, seat_num, is_seat_free} = req.body
             const seat = await adminPool.query(
-                "SELECT * FROM update_seats($1, $2)",
-                [seat_id, seat_num]
+                "SELECT * FROM update_seats($1, $2, $3)",
+                [seat_id, seat_num, is_seat_free]
             )
             return res.json(seat)
         } catch (e) {
@@ -46,7 +46,7 @@ class SeatController {
         try {
             const {fk_van_id} = req.query
             let seats = await userPool.query(
-                "SELECT * FROM fetch_seats($1)",
+                "SELECT * FROM free_seat($1)",
                 [fk_van_id]
             )
             seats = seats.rows

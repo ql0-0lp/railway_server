@@ -1,47 +1,38 @@
-CREATE OR REPLACE FUNCTION add_type_van(_type_van_name varchar(128), _seat_count int)
-RETURNS VOID AS
-$BODY$
-	BEGIN
-		INSERT INTO type_van(type_van_name, seat_count)
-		VALUES (_type_van_name, _seat_count);
-	END;
-$BODY$
-LANGUAGE plpgsql;
+create function add_type_van(_type_van_name character varying, _seat_count integer) returns void
+    language plpgsql
+as
+$$
+BEGIN
+    INSERT INTO type_van(type_van_name, seat_count)
+    VALUES (_type_van_name, _seat_count);
+END;
+$$;
+
 ------------------------------------------- ADD DATA TO type_van TABLE -------------------------------------------
 
 
-CREATE OR REPLACE FUNCTION delete_type_van(_type_van_name varchar(128))
-RETURNS VOID AS
+create function delete_type_van(_type_van_name character varying) returns void
+    language plpgsql
+as
 $$
-	BEGIN
-		DELETE FROM type_van WHERE type_van_name = _type_van_name;
-	END;
-$$
-LANGUAGE plpgsql;
+BEGIN
+    DELETE FROM type_van WHERE type_van_name = _type_van_name;
+END;
+$$;
+
 ------------------------------------------- DELETE DATA FROM human TABLE -------------------------------------------
 
 
-CREATE OR REPLACE FUNCTION update_type_van(_type_van_name varchar(128), _seat_count int)
-RETURNS VOID AS
-$BODY$
-	BEGIN
-		UPDATE type_van SET seat_count = _seat_count
-		WHERE type_van_name = _type_van_name;
-	END;
-$BODY$
-LANGUAGE plpgsql;
-------------------------------------------- UPDATE DATA FOR human TABLE -------------------------------------------
-
-CREATE OR REPLACE FUNCTION fetch_type_van()
-    RETURNS TABLE(type_van_name varchar(128), seat_count int) AS
-$BODY$
+create function update_type_van(_type_van_name character varying, _seat_count integer) returns void
+    language plpgsql
+as
+$$
 BEGIN
-    RETURN QUERY
-        SELECT type_van.type_van_name, type_van.seat_count
-        FROM type_van
-        ORDER BY type_van.type_van_name;
+    UPDATE type_van SET seat_count = _seat_count
+    WHERE type_van_name = _type_van_name;
 END;
-$BODY$
-    LANGUAGE plpgsql;
+$$;
+
+------------------------------------------- UPDATE DATA FOR human TABLE -------------------------------------------
 
 

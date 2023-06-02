@@ -6,6 +6,7 @@ class CitiesController {
     async create(req, res, next) {
         try {
             const {city_name} = req.body
+            console.log(city_name)
             const city = await adminPool.query(
                 "SELECT * FROM add_cities($1)",
                 [city_name]
@@ -19,10 +20,11 @@ class CitiesController {
 
     async delete(req, res, next) {
         try {
-            const {city_id} = req.params
+            const {city_name} = req.params
+
             const city = await adminPool.query(
                 "SELECT * FROM delete_cities($1)",
-                [city_id]
+                [city_name]
             )
             return res.json(city)
         } catch (e) {

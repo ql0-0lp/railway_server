@@ -18,10 +18,10 @@ class VanController {
 
     async update(req, res, next) {
         try {
-            const {van_id, van_name} = req.body
+            const {van_id, van_name, fk_type_van, fk_train_id} = req.body
             const van = await adminPool.query(
-                "SELECT * FROM update_van($1, $2)",
-                [van_id, van_name]
+                "SELECT * FROM update_van($1, $2, $3, $4)",
+                [van_id, van_name, fk_type_van, fk_train_id]
             )
             return res.json(van)
         } catch (e) {

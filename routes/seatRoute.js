@@ -4,7 +4,7 @@ const seatController = require('../controllers/seatController')
 const checkRoleMiddleware = require('../middleware/checkRoleMiddleware')
 
 router.post('/', checkRoleMiddleware('ADMIN'), seatController.create)
-router.delete('/:id', checkRoleMiddleware('ADMIN'), seatController.delete)
+router.delete('/:seat_id', checkRoleMiddleware('ADMIN'), seatController.delete)
 router.post('/update', checkRoleMiddleware('ADMIN'), seatController.update)
 router.get('/', seatController.getAll)
 

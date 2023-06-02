@@ -32,6 +32,7 @@ class TrainModelController {
     async delete(req, res, next) {
         try {
             const {train_model_id} = req.params
+            console.log(train_model_id)
             const trainModel = await adminPool.query(
                 "SELECT * FROM delete_train_model($1)",
                 [train_model_id]

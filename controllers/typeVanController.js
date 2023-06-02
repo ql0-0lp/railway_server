@@ -19,6 +19,7 @@ class TypeVanController {
     async update(req, res, next) {
         try {
             const {type_van_name, seat_count} = req.body
+            console.log(seat_count, type_van_name)
             const typeVan = await adminPool.query(
                 "SELECT * FROM update_type_van($1, $2)",
                 [type_van_name, seat_count]

@@ -4,7 +4,7 @@ const railwayStationController = require('../controllers/railwayStationControlle
 const checkRoleMiddleware = require('../middleware/checkRoleMiddleware')
 
 router.post('/', checkRoleMiddleware('ADMIN'), railwayStationController.create)
-router.delete('/:id', checkRoleMiddleware('ADMIN'), railwayStationController.delete)
+router.delete('/:railway_station_id', checkRoleMiddleware('ADMIN'), railwayStationController.delete)
 router.post('/update', checkRoleMiddleware('ADMIN'), railwayStationController.update)
 router.get('/', railwayStationController.getAll)
 
